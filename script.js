@@ -1,8 +1,6 @@
-
+let playerSelection;
 function capitalize(p){
-    p1 = p.slice(0,1).toUpperCase();
-    p2 = p.slice(1,p.length).toLowerCase();
-    p = p1+p2;
+    //if 
     return p
 }
 
@@ -21,25 +19,23 @@ function playRound(playerSelection, computerSelection){
     if(playerSelection === computerSelection){
         return `${playerSelection} with ${playerSelection}! Tie!`
     }else if(playerSelection === `Rock` && computerSelection === `Scissors`){
-        return `You Win! ${playerSelection} beats ${computerSelection}`
+        return 'a'
     }else if(playerSelection === `Rock` && computerSelection === `Papers`){
-        return `You Lose! ${playerSelection} beats ${computerSelection}`
+        return 
     }else if(playerSelection === `Papers` && computerSelection === `Scissors`){
-        return `You Lose! ${playerSelection} beats ${computerSelection}`
+        return  'a'
     }else if(playerSelection === `Papers` && computerSelection === `Rock`){
-        return `You Win! ${playerSelection} beats ${computerSelection}`
+        return
     }else if(playerSelection === `Scissors` && computerSelection === `Papers`){
-        return `You Win! ${playerSelection} beats ${computerSelection}`
+        return 'a'
     }else if(playerSelection === `Scissors` && computerSelection === `Rock`){
-        return `You Lose! ${playerSelection} beats ${computerSelection}`
+        return  'a'
     }
 }
 
-function game(){
+function game(playerSelection){
     for(let i=0;i<5;i++){
-        console.log(`Play!`);
-        let playerSelection = prompt(`Type Rock, Papers or Scissors`);
-        playerSelection = capitalize(playerSelection);
+        playerSelection; 
         let computerSelection = getComputerChoice();
         console.log(computerSelection);
         console.log(playerSelection);
@@ -48,7 +44,45 @@ function game(){
     }
 }
 
-const btn = document.querySelector('#Rock');
-btn.addEventListener(click, () => {
-  alert("Hello World");
+const btn = document.querySelector('.Play');
+btn.addEventListener('click', () => {
+    const selection = document.querySelector('.selection')
+    const Rock = document.createElement('button')
+    const Papers = document.createElement('button')
+    const Scissors = document.createElement('button')
+    Rock.classList.add('Rock')
+    Papers.classList.add('Papers')
+    Scissors.classList.add('Scissors')
+    Rock.textContent = 'Rock'
+    Papers.textContent = 'Papers'
+    Scissors.textContent = 'Scissors'
+    selection.appendChild(Rock)
+    selection.appendChild(Papers)
+    selection.appendChild(Scissors)
 });
+function saas(){
+    const bRock = document.querySelector('.Rock');
+    const bPapers = document.querySelector('.Papers');
+    const bScissors = document.querySelector('.Scissors');
+bRock.addEventListener('click', () => {
+    playerSelection =  'Rock'
+    game(playerSelection)
+    saas()
+});
+
+bPapers.addEventListener('click', () => {
+    playerSelection =  'Papers'
+    game(playerSelection)
+    saas()
+});
+
+bScissors.addEventListener('click', () => {
+    playerSelection =  'Scissors'
+    game(playerSelection)
+    saas()
+});
+}
+
+saas()
+
+
