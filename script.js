@@ -1,88 +1,121 @@
-let playerSelection;
-function capitalize(p){
-    //if 
-    return p
-}
-
-function getComputerChoice(){
-    let rand = Math.floor(Math.random() * 3);
-    if(rand===0){
-        return `Rock`
-    }if(rand===1){
-        return `Papers`
-    }if(rand===2){
-        return `Scissors`
+function print(a){
+    for(var i = 0; i < 3; i++) {
+      console.log(a[i], ',');
     }
-}
-
-function playRound(playerSelection, computerSelection){
-    if(playerSelection === computerSelection){
-        return `${playerSelection} with ${playerSelection}! Tie!`
-    }else if(playerSelection === `Rock` && computerSelection === `Scissors`){
-        return 'a'
-    }else if(playerSelection === `Rock` && computerSelection === `Papers`){
-        return 
-    }else if(playerSelection === `Papers` && computerSelection === `Scissors`){
-        return  'a'
-    }else if(playerSelection === `Papers` && computerSelection === `Rock`){
-        return
-    }else if(playerSelection === `Scissors` && computerSelection === `Papers`){
-        return 'a'
-    }else if(playerSelection === `Scissors` && computerSelection === `Rock`){
-        return  'a'
+  }
+  
+  
+  function getRandomInt() {
+    return Math.floor(Math.random() * 2);
+  }
+  
+  function GameBoard() {
+    let gameBoard = new Array();
+    const rows = 3;
+    for (let i = 0; i < rows; i++)
+      gameBoard[i] = new Array(1, 1, 1);
+  
+    const Round = function Round(marker, line, column) {
+      gameBoard[line][column] = marker;
+      print(gameBoard);
     }
-}
-
-function game(playerSelection){
-    for(let i=0;i<5;i++){
-        playerSelection; 
-        let computerSelection = getComputerChoice();
-        console.log(computerSelection);
-        console.log(playerSelection);
-        let print = playRound(playerSelection, computerSelection);
-        console.log(print);
+    const getGameBoard = function getGameBoard(){
+      return gameBoard;
     }
-}
-
-const btn = document.querySelector('.Play');
-btn.addEventListener('click', () => {
-    const selection = document.querySelector('.selection')
-    const Rock = document.createElement('button')
-    const Papers = document.createElement('button')
-    const Scissors = document.createElement('button')
-    Rock.classList.add('Rock')
-    Papers.classList.add('Papers')
-    Scissors.classList.add('Scissors')
-    Rock.textContent = 'Rock'
-    Papers.textContent = 'Papers'
-    Scissors.textContent = 'Scissors'
-    selection.appendChild(Rock)
-    selection.appendChild(Papers)
-    selection.appendChild(Scissors)
-});
-function saas(){
-    const bRock = document.querySelector('.Rock');
-    const bPapers = document.querySelector('.Papers');
-    const bScissors = document.querySelector('.Scissors');
-bRock.addEventListener('click', () => {
-    playerSelection =  'Rock'
-    game(playerSelection)
-    saas()
-});
-
-bPapers.addEventListener('click', () => {
-    playerSelection =  'Papers'
-    game(playerSelection)
-    saas()
-});
-
-bScissors.addEventListener('click', () => {
-    playerSelection =  'Scissors'
-    game(playerSelection)
-    saas()
-});
-}
-
-saas()
-
-
+    const Full = function Full() {
+      let f = 0;
+      for(let i=0;i<3;i++) {
+        for(let j=0;j<3;j++) {
+          if(gameBoard[i][j]!=1){
+            f++;
+          }
+        }
+      }
+      if(f===9){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  
+    const Display = function Display(gameBoard) {
+      for(let i=0;i<3;i++){
+        for(let j=0;j<3;j++){
+          if(gameBoard[i][j]!=1) {
+            const grid = document.getElementById(`${i}${j}`);
+            grid.textContent = gameBoard[i][j];
+          }
+        }
+      }
+    }
+  
+    const Mark = function Mark(marker){
+      const square = document.querySelectorAll('a');
+      for(let i=0; i<square.length;i++){
+        square[i].addEventListener('click', () => {
+          square[i].textContent = marker;
+          line = i
+        })
+      }
+    }
+  
+    return {gameBoard, getGameBoard, Round, Full, Display, Mark} ;
+  }
+  
+  function Person (thisname, thismarker) {
+    const name = thisname;
+    const marker = thismarker;
+  
+    const getMarker = function getMarker() {
+      return marker;
+    }
+    const getName = function getName() {
+      return name;
+    }
+    const getPosition = function getPosition() {
+      return {line, column};
+    }
+  
+    const Play = function Play(gameBoard){
+  
+    }
+    return {name, marker, getMarker, getName, getPosition, Play};
+  }
+  
+  function Game(P1, P2, Gameboard) {
+    let List;
+    let i = 0;
+    if(getRandomInt()===1) {
+      List = [P1, P2];
+    } else {
+      List = [P2, P1];
+    };
+    while(Win(Gameboard.getGameBoard())===false || Gameboard.Full()===false) {
+      if (i === 0) {i++;} else {i = 0;}
+      const marker = List[i].marker;
+      const {line, column} = List[i].Play(Gameboard.getGameBoard());
+      Gameboard.Round(marker, line, column);
+      Gameboard.Display(Gameboard.getGameBoard());
+      if (Win(Gameboard.getGameBoard())===false && Gameboard.Full()===true) {
+      console.log("Tie!");
+      } if (Win(Gameboard.getGameBoard())){
+        console.log('Game Over');
+        break;}
+    }
+  }
+  
+  function Win(gameBoard) {
+    for(let i=0; i<3; i++) {
+      while(((gameBoard[i][0]===gameBoard[i][1] && gameBoard[i][1]===gameBoard[i][2]) || (
+        gameBoard[0][i]===gameBoard[1][i] && gameBoard[1][i]===gameBoard[2][i])) && (
+          gameBoard[i][1]!=1) && (gameBoard[1][i]!=1)){
+        return true;
+      }
+    }return false;
+  }
+  
+  let P1 = Person('Gabriel', 'X');
+  let P2 = Person('Rabin', 'O');
+  let Gameboard = GameBoard();
+  Game(P1, P2, Gameboard);
+  
